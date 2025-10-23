@@ -1,0 +1,97 @@
+﻿@page "/"
+
+@rendermode InteractiveServer
+
+@using Syncfusion.Blazor.Gantt
+
+<SfGantt DataSource="@TaskCollection" Height="550px" Width="100%" RenderBaseline="true" ConnectorLineBackground="#ab6060fc" ConnectorLineWidth="2">
+    <GanttTaskFields Id="TaskId" Name="TaskName" StartDate="StartDate" EndDate="EndDate" Duration="Duration" BaselineStartDate="BaselineStartDate" BaselineEndDate="BaselineEndDate" Dependency="Predecessor" ParentID="ParentId"></GanttTaskFields>
+    <GanttEditSettings AllowTaskbarEditing="true" AllowEditing="true" AllowAdding="true"></GanttEditSettings>
+    <GanttTemplates TValue="TaskData">
+        <TaskbarTemplate>
+            @{
+                var task = context as TaskData;
+                <div class="e-gantt-child-taskbar e-gantt-child-taskbar-inner-div" style="background-color: @(task.Predecessor != null ? "#6d619b" : "#d3d3d3");height: 16px;">
+                    <span>@((context as TaskData).TaskName)</span>
+                </div>
+            }
+        </TaskbarTemplate>
+    </GanttTemplates>
+    <GanttTooltipSettings ShowTooltip="true" TValue="TaskData">
+        <ConnectorLineTemplate>
+            <div>Predecessor: @((context as TaskData).Predecessor)</div>
+        </ConnectorLineTemplate>
+    </GanttTooltipSettings>
+
+    <GanttLabelSettings LeftLabel="TaskName" TValue="TaskData"></GanttLabelSettings>
+</SfGantt>
+
+<style>
+    .e-connector-line {
+        stroke: #ab6060fc !important;
+        stroke-width: 2px;
+    }
+
+    .e-connector-line-arrow {
+        fill: #ab6060fc !important;
+    }
+</style>
+
+@code {
+    private DateTime ProjectStart = new DateTime(2025, 01, 01);
+    private DateTime ProjectEnd = new DateTime(2025, 06, 30);
+    private List<TaskData> TaskCollection { get; set; }
+
+    protected override void OnInitialized()
+    {
+        this.TaskCollection = GetTaskCollection();
+    }
+
+    public class TaskData
+    {
+        public int TaskId { get; set; }
+        public string TaskName { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime BaselineStartDate { get; set; }
+        public DateTime BaselineEndDate { get; set; }
+        public string Duration { get; set; }
+        public string Predecessor { get; set; }
+        public int Progress { get; set; }
+        public int? ParentId { get; set; }
+    }
+
+    public static List<TaskData> GetTaskCollection()
+    {
+        return new List<TaskData>
+    {
+        // Phase 1: Site Preparation
+        new TaskData { TaskId = 1, TaskName = "Site Preparation", StartDate = new DateTime(2025, 01, 01), BaselineStartDate = new DateTime(2025, 01, 01), BaselineEndDate = new DateTime(2025, 01, 01) },
+        new TaskData { TaskId = 2, TaskName = "Survey Land", StartDate = new DateTime(2025, 01, 01), Duration = "2", Progress = 100, ParentId = 1, Predecessor = "", BaselineStartDate = new DateTime(2025, 01, 01), BaselineEndDate = new DateTime(2025, 01, 03) },
+        new TaskData { TaskId = 3, TaskName = "Excavation", StartDate = new DateTime(2025, 01, 03), Duration = "3", Progress = 60, ParentId = 1, Predecessor = "2FS", BaselineStartDate = new DateTime(2025, 01, 03), BaselineEndDate = new DateTime(2025, 01, 06) },
+
+        // Phase 2: Foundation
+        new TaskData { TaskId = 4, TaskName = "Foundation", StartDate = new DateTime(2025, 01, 06), Predecessor = "3FS+1d", BaselineStartDate = new DateTime(2025, 01, 06), BaselineEndDate = new DateTime(2025, 01, 06) },
+        new TaskData { TaskId = 5, TaskName = "Pour Footings", StartDate = new DateTime(2025, 01, 07), Duration = "4", Progress = 50, ParentId = 4, Predecessor = "4FS", BaselineStartDate = new DateTime(2025, 01, 07), BaselineEndDate = new DateTime(2025, 01, 11) },
+        new TaskData { TaskId = 6, TaskName = "Cure Footings", StartDate = new DateTime(2025, 01, 11), Duration = "3", Progress = 20, ParentId = 4, Predecessor = "5FS", BaselineStartDate = new DateTime(2025, 01, 11), BaselineEndDate = new DateTime(2025, 01, 14) },
+
+        // Phase 3: Structure
+        new TaskData { TaskId = 7, TaskName = "Framing", StartDate = new DateTime(2025, 01, 14), Predecessor = "6FS", BaselineStartDate = new DateTime(2025, 01, 14), BaselineEndDate = new DateTime(2025, 01, 14) },
+        new TaskData { TaskId = 8, TaskName = "Install Steel Frame", StartDate = new DateTime(2025, 01, 14), Duration = "6", Progress = 40, ParentId = 7, Predecessor = "", BaselineStartDate = new DateTime(2025, 01, 14), BaselineEndDate = new DateTime(2025, 01, 20) },
+        new TaskData { TaskId = 9, TaskName = "Install Roof", StartDate = new DateTime(2025, 01, 20), Duration = "4", Progress = 30, ParentId = 7, Predecessor = "8SS-1d", BaselineStartDate = new DateTime(2025, 01, 20), BaselineEndDate = new DateTime(2025, 01, 24) },
+
+        // Phase 4: Interior
+        new TaskData { TaskId = 10, TaskName = "Interior Work", StartDate = new DateTime(2025, 01, 24), BaselineStartDate = new DateTime(2025, 01, 24), BaselineEndDate = new DateTime(2025, 01, 24) },
+        new TaskData { TaskId = 11, TaskName = "Electrical Wiring", StartDate = new DateTime(2025, 01, 24), Duration = "5", Progress = 50, ParentId = 10, Predecessor = "", BaselineStartDate = new DateTime(2025, 01, 24), BaselineEndDate = new DateTime(2025, 01, 29) },
+        new TaskData { TaskId = 12, TaskName = "Plumbing", StartDate = new DateTime(2025, 01, 24), Duration = "5", Progress = 50, ParentId = 10, Predecessor = "11SS", BaselineStartDate = new DateTime(2025, 01, 24), BaselineEndDate = new DateTime(2025, 01, 29) },
+        new TaskData { TaskId = 13, TaskName = "HVAC Installation", StartDate = new DateTime(2025, 01, 25), Duration = "4", Progress = 30, ParentId = 10, Predecessor = "12SF", BaselineStartDate = new DateTime(2025, 01, 25), BaselineEndDate = new DateTime(2025, 01, 29) },
+
+        // Final Phase
+        new TaskData { TaskId = 14, TaskName = "Final Inspection", StartDate = new DateTime(2025, 02, 01), Duration = "2", Progress = 0, Predecessor = "13FF+2d", BaselineStartDate = new DateTime(2025, 02, 01), BaselineEndDate = new DateTime(2025, 02, 03) },
+        new TaskData { TaskId = 15, TaskName = "Landscaping", StartDate = new DateTime(2025, 02, 04), Duration = "3", Progress = 0, Predecessor = "14FS", BaselineStartDate = new DateTime(2025, 02, 04), BaselineEndDate = new DateTime(2025, 02, 07) },
+        new TaskData { TaskId = 16, TaskName = "Cleanup", StartDate = new DateTime(2025, 02, 06), Duration = "2", Progress = 0, Predecessor = "15SS", BaselineStartDate = new DateTime(2025, 02, 06), BaselineEndDate = new DateTime(2025, 02, 08) },
+        new TaskData { TaskId = 17, TaskName = "Security System Setup", StartDate = new DateTime(2025, 02, 07), Duration = "2", Progress = 0, Predecessor = "16SF", BaselineStartDate = new DateTime(2025, 02, 07), BaselineEndDate = new DateTime(2025, 02, 09) },
+        new TaskData { TaskId = 18, TaskName = "Handover", StartDate = new DateTime(2025, 02, 10), Duration = "1", Progress = 0, Predecessor = "17FF", BaselineStartDate = new DateTime(2025, 02, 10), BaselineEndDate = new DateTime(2025, 02, 11) }
+    };
+    }
+}

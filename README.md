@@ -1,38 +1,40 @@
 # Blazor Gantt Task Predecessor
 
-This repository contains a Blazor Server sample that demonstrates the implementation of task predecessor relationships in the Syncfusion Blazor Gantt Chart. The sample focuses on defining and visualizing task dependencies within a project schedule.
+This repository contains a Blazor Web Application that demonstrates the implementation of task predecessor relationships in the Syncfusion Blazor Gantt Chart. The sample focuses on defining and visualizing task dependencies within a project schedule.
 
-## Project Overview
+## Project overview
 
-The Syncfusion Blazor Gantt Chart supports task predecessor functionality to represent dependencies between tasks in a project timeline. This project showcases how predecessor relationships such as Finish-to-Start, Start-to-Start, Finish-to-Finish, and Start-to-Finish are configured and rendered in a Blazor Server application.
+The Syncfusion Blazor Gantt Chart provides built‑in support for task predecessor relationships, enabling you to represent dependencies between tasks in a project timeline. This project showcases how predecessor relationships such as **Finish-to-Start, Start-to-Start, Finish-to-Finish**, and **Start-to-Finish** are configured and rendered in a Blazor Web application.
 
-The sample highlights how task dependencies influence scheduling behavior and timeline visualization. Predecessor links are displayed between tasks to clearly indicate execution order and dependency constraints. This functionality is essential for managing complex project schedules where tasks are interdependent.
+The sample highlights how task dependencies influence scheduling behavior and timeline visualization. **Predecessor links** are displayed between tasks to clearly indicate execution order and dependency constraints. This functionality is essential for managing complex project schedules where tasks are interdependent.
 
 The included demonstration provides a visual representation of predecessor links within the Gantt Chart and illustrates how changes in task scheduling reflect across dependent tasks.
 
 ## Features
 
 - Configuration of task predecessor relationships
-- Visualization of dependency links between Gantt tasks
+- Visualization of dependency links between Gantt Chart tasks
 - Support for Finish-to-Start (FS), Start-to-Start (SS), Finish-to-Finish (FF), and Start-to-Finish (SF) predecessor types
 - Automatic schedule updates based on task dependencies
-- Implementation using Syncfusion Blazor Gantt in a Blazor Server application
+- Implementation using Syncfusion Blazor Gantt Chart in a Blazor Web App application
 
 ## Prerequisites
 
-- Visual Studio 2022 (v17.8 or later)
-- .NET 8 SDK with Blazor Server support
+- Visual Studio 2022 (or later)
+- .NET SDK 8.0 or later
 - Syncfusion Blazor Gantt NuGet package
+- A valid Syncfusion license (Community or Trial)
 
 ## How to Run the Project
 
 1. Clone or download this repository.
-2. Open the solution in Visual Studio 2022 (v17.8 or later).
-3. Restore NuGet packages.
+2. Open the solution in Visual Studio 2022 or later.
+3. Restore the required NuGet packages.
 4. Register your Syncfusion license key (if not already registered).
-5. Run the application.
+5. Build and run the application.
+6. Navigate to the page hosting the Gantt Chart to view task predecessor relationships.
 
-## Sample Output
+## Sample output
 
 The following image illustrates task predecessor relationships rendered in the Gantt Chart:
 

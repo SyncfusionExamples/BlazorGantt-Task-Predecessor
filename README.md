@@ -28,7 +28,7 @@ The included demonstration provides a visual representation of predecessor links
 ## How to Run the Project
 
 1. Clone or download this repository.
-2. Open the solution in Visual Studio 2022 or later.
+2. Open the project file (`.csproj`) in Visual Studio 2022 or later.
 3. Restore the required NuGet packages.
 4. Register your Syncfusion license key (if not already registered).
 5. Build and run the application.
